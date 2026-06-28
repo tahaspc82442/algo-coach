@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Algo Coach - Evaluation</title>
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Highlight.js for code formatting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container glass">
+        <header>
+            <h1>🧠 Daily Algo Coach</h1>
+            <p class="subtitle">Detailed Evaluation</p>
+        </header>
+        
+        <div id="loading" class="loader">Generating rendering...</div>
+        
+        <div id="content" style="display: none;">
+            <div class="section">
+                <h3>The Challenge</h3>
+                <div id="scenario" class="content-box"></div>
+            </div>
+            
+            <div class="section">
+                <h3>Your Answer</h3>
+                <div id="answer" class="content-box user-answer"></div>
+            </div>
+            
+            <div class="section">
+                <h3>AI Feedback</h3>
+                <div id="feedback" class="content-box feedback-box markdown-body"></div>
+            </div>
+        </div>
+        
+        <div id="error" style="display: none;" class="error-box">
+            Evaluation not found.
+        </div>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>
