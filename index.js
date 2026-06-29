@@ -68,6 +68,12 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id.toString();
     const text = msg.text;
 
+    const allowedChatId = process.env.ALLOWED_CHAT_ID;
+    if (allowedChatId && chatId !== allowedChatId) {
+        console.warn(`Blocked unauthorized message from chat ID: ${chatId}`);
+        return;
+    }
+
     if (!text) return;
 
     if (text === '/start') {
