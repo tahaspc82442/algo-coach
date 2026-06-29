@@ -15,8 +15,12 @@ if (!MONGODB_URI) {
 const userStateSchema = new mongoose.Schema({
     chat_id: { type: String, required: true, unique: true },
     current_topic: String,
+    current_type: { type: String, default: 'algorithm' },
     last_prompt_date: String,
-    status: String // 'waiting_for_evening', 'grilling', 'completed'
+    status: String, // 'idle', 'grilling', 'completed'
+    level: { type: Number, default: 1 },
+    xp: { type: Number, default: 0 },
+    mastered_topics: { type: [String], default: [] }
 });
 
 const evaluationSchema = new mongoose.Schema({
