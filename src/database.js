@@ -39,7 +39,7 @@ const upsertUserState = async (chatId, state) => {
     return await UserState.findOneAndUpdate(
         { chat_id: chatId },
         { ...state, chat_id: chatId },
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: 'after' }
     ).lean();
 };
 

@@ -3,6 +3,32 @@ require('dotenv').config();
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+const modelsToTry = [
+    'gemini-3.5-flash',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-lite'
+];
+
+async function generateWithFallback(prompt) {
+    for (const modelName of modelsToTry) {
+        try {
+            console.log(`Attempting generation with ${modelName}...`);
+            const response = await ai.models.generateContent({
+                model: modelName,
+                contents: prompt,
+            });
+            return response.text;
+        } catch (error) {
+            console.warn(`Model ${modelName} failed: ${error.message}`);
+            // If this is the last model, throw the error
+            if (modelName === modelsToTry[modelsToTry.length - 1]) {
+                throw error;
+            }
+        }
+    }
+}
+
 async function generateMorningScenario(historyContext = "") {
     const prompt = `You are a strict, senior software engineer preparing a candidate for a technical interview. 
 Generate a short, real-world engineering problem that requires a specific data structure or algorithm to solve optimally.
@@ -20,11 +46,7 @@ Output your response EXACTLY in this format:
 - (Link or search term to learn about this concept)
 - (Link or search term for system design applications of this concept)`;
 
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-    });
-    return response.text;
+    return await generateWithFallback(prompt);
 }
 
 async function gradeResponse(scenario, userResponse) {
@@ -53,11 +75,7 @@ Then, provide a detailed breakdown formatted exactly like this:
 \`\`\`
 `;
 
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-    });
-    return response.text;
+    return await generateWithFallback(prompt);
 }
 
 module.exports = {
